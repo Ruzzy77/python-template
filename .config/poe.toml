@@ -1,0 +1,387 @@
+##:schema = "poethepoet"
+
+################################################################################
+# Poethepoet Configuration
+
+[tool.poe]
+envfile = ".env"
+# tasks.cwd = "."
+verbosity = -1
+
+    [tool.poe.tasks.workspace]
+    cmd  = "realpath ${WORKSPACE}"
+    help = "Print workspace folder location"
+
+    [tool.poe.tasks.env]
+    help  = "Print environment variables"
+    shell = "printenv | grep -v -E '^(LSCOLORS|LS_COLORS|PS1|_P9K|_|}%b%k%f}}|}:)' | sort"
+
+    # Black
+    [tool.poe.tasks.black]
+    cwd = "."
+    help = "Format code with black"
+    shell = """
+        cd ${POE_PWD}
+
+        printf "\n\\033[90;47m"
+        printf "    Formatting code with 'black'    "
+        printf "\\033[0m\n"
+
+        echo "\\033[38;5;245m"
+        workspace=$(realpath ${WORKSPACE})
+        config="${workspace}/${CONFIG_FORMATTER}"
+        check=$(test -f ${config} && echo "OK")
+        status=$(test -f ${config} && echo "\\033[0;32m[OK]\\033[0m" || echo "\\033[0;31m[NOT FOUND]\\033[0m")
+        echo "    workspace : ${workspace}"
+        echo "    config    : ${config} ${status}"
+        printf "\\033[0;33m"
+        echo "    pwd       : ${PWD}"
+        printf "\\033[0m"
+        if [ -z "$check" ]; then
+            echo "\\033[0;31m"
+            echo "    Formatter config file not found"
+            echo "\\033[0m"
+            exit 1
+        fi
+        echo ""
+
+        black --config=${config} ${verbose:+-v} ${targets}
+    """
+        [tool.poe.tasks.black.args]
+        targets = { default = ".", positional = true, type = "string" }
+        verbose = { options = [ "--verbose", "-v" ], type = "boolean" }
+
+
+# Isort
+[tool.poe.tasks.isort]
+cwd = "."
+help = "Format imports with isort"
+shell = """
+    cd ${POE_PWD}
+
+    printf "\n\\033[90;47m"
+    printf "    Formatting code with 'isort'    "
+    printf "\\033[0m\n"
+
+    echo "\\033[38;5;245m"
+    workspace=$(realpath ${WORKSPACE})
+    config="${workspace}/${CONFIG_FORMATTER}"
+    check=$(test -f ${config} && echo "OK")
+    status=$(test -f ${config} && echo "\\033[0;32m[OK]\\033[0m" || echo "\\033[0;31m[NOT FOUND]\\033[0m")
+    echo "    workspace : ${workspace}"
+    echo "    config    : ${config} ${status}"
+    printf "\\033[0;33m"
+    echo "    pwd       : ${PWD}"
+    printf "\\033[0m"
+    if [ -z "$check" ]; then
+        echo "\\033[0;31m"
+        echo "    Formatter config file not found"
+        echo "\\033[0m"
+        exit 1
+    fi
+    echo ""
+
+    isort --settings-path="${config}" ${verbose:+-v} ${targets}
+"""
+    [tool.poe.tasks.isort.args]
+    targets = { default = ".", positional = true, type = "string" }
+    verbose = { options = [ "--verbose", "-v" ], type = "boolean" }
+
+# Format (black + isort + docformatter)
+[tool.poe.tasks.format]
+help = "Format code with black, isort, docformatter"
+shell = """
+    echo "\\033[1;4;33m"
+    echo "Formatting code with black, isort and docformatter"
+    echo "\\033[0m"
+
+    echo "\\033[0;33mRunning black...\\033[0m\n"
+    poe -q black ${verbose:+-v} ${targets}
+    echo ""
+
+    echo "\\033[0;33mRunning isort...\\033[0m\n"
+    poe -q isort ${verbose:+-v} ${targets}
+    echo ""
+
+    echo "\\033[0;33mRunning docformatter...\\033[0m\n"
+    poe -q docformatter -i ${targets}
+    echo ""
+"""
+    [tool.poe.tasks.format.args]
+    targets = { default = ".", positional = true, type = "string" }
+    verbose = { options = [ "--verbose", "-v" ], type = "boolean" }
+
+# Pydocstyle
+[tool.poe.tasks.pydocstyle]
+cwd = "."
+help = "Check docstrings with pydocstyle"
+interpreter = "bash"
+shell = """
+    cd ${POE_PWD}
+
+    printf "\n\\033[90;47m"
+    printf "    Checking docstring with 'pydocstyle'    "
+    printf "\\033[0m\n"
+
+    printf "\\033[38;5;245m\n"
+    workspace=$(realpath ${WORKSPACE})
+    config="${workspace}/${CONFIG_FORMATTER}"
+    check=$(test -f ${config} && echo "OK")
+    status=$(test -f ${config} && echo "\\033[0;32m[OK]\\033[0m" || echo "\\033[0;31m[NOT FOUND]\\033[0m")
+    echo "    workspace : ${workspace}"
+    echo "    config    : ${config} ${status}"
+    printf "\\033[0;33m"
+    echo "    pwd       : ${PWD}"
+    printf "\\033[0m"
+    if [ -z "$check" ]; then
+        echo "\\033[0;31m"
+        echo "    Formatter config file not found"
+        echo "\\033[0m"
+        exit 1
+    fi
+    echo ""
+
+    # run original command and save output to a variable
+    output=$(pydocstyle --config=${config} ${verbose:+-v} ${targets})
+
+    # print output to stdout
+    if [[ -n "${verbose}" ]]; then
+        printf '\\033[38;5;244m'
+        echo "${output}"
+        printf '\\033[0m'
+    fi
+
+    # count problems
+    D_PATTERN="D\\d{3}"
+    problems=$(echo "${output}" | grep -P $D_PATTERN | wc -l)
+
+    # print problems to stdout
+    printf '\\033[0;33m\n'
+    echo "Found: ${problems} problems"
+    printf '\\033[0m'
+"""
+    [tool.poe.tasks.pydocstyle.args]
+    targets = { default = ".", positional = true, type = "string" }
+    verbose = { options = [ "--verbose", "-v" ], type = "boolean" }
+
+# Docformatter
+[tool.poe.tasks.docformatter]
+cwd = "."
+help = "Format docstrings with docformatter"
+shell = """
+
+    cd ${POE_PWD}
+
+    printf "\n\\033[90;47m"
+    printf "    Formatting code with 'docformatter'    "
+    printf "\\033[0m\n"
+
+    echo "\\033[38;5;245m"
+    workspace=$(realpath ${WORKSPACE})
+    config="${workspace}/${CONFIG_DOCFORMATTER}"
+    check_file=$(test -f ${config} && echo "OK")
+    status=$(test -f ${config} && echo "\\033[0;32m[OK]\\033[0m" || echo "\\033[0;31m[NOT FOUND]\\033[0m")
+    echo "    workspace : ${workspace}"
+    echo "    config    : ${config} ${status}"
+    printf "\\033[0;33m"
+    echo "    pwd       : ${PWD}"
+    printf "\\033[0m"
+    if [ -z "$check_file" ]; then
+        echo "\\033[0;31m"
+        echo "    Docformatter config file not found"
+        echo "\\033[0m"
+        exit 1
+    fi
+    echo ""
+
+    # Get exit code of the command
+    # 0 - then there are no problems
+    # 1 - if any error encountered
+    # 2 - if it was interrupted
+    # 3 - if any file needs to be formatted (in --check or --in-place mode)
+
+    if [ $check ]; then
+        in_place=""
+    fi
+
+    output=$(docformatter --recursive --config $config \
+    ${check:+--check} ${diff:+--diff} ${in_place:+--in-place} \
+    ${targets})
+
+    exit_code=$?    # save exit code to a variable
+
+    # echo ""
+    # If output has any content, print newline
+    if [ -n "$output" ]; then
+        echo ""
+    fi
+
+    if [ "$exit_code" -eq 0 ]; then
+        printf '\\033[0;32m'
+        echo "No Docstring problems found"
+        printf '\\033[0m'
+    else
+        printf '\\033[0;31m'
+        if [ "$exit_code" -eq 1 ]; then
+            echo "Error encountered"
+        elif [ "$exit_code" -eq 2 ]; then
+            echo "Interrupted"
+        elif [ "$exit_code" -eq 3 ]; then
+            str="Found files that need to be formatted"
+            if [ -n "$check" ]; then
+                str="${str} (use --diff to see the changes)"
+            elif [ -n "$in_place" ]; then
+                str="${str} and \\033[4;33mFixed\\033[24;31m"
+                str="${str} (use --diff to see the changes)"
+            fi
+
+            echo "$str"
+            printf '\\033[0m'
+
+            if [ -n "$diff" ]; then
+                echo ""
+            fi
+        fi
+
+        printf '\\033[0m'
+        printf '\\033[38;5;244m'
+        echo "$output"
+        printf '\\033[0m'
+    fi
+"""
+    [tool.poe.tasks.docformatter.args]
+    check    = { options = [ "--check", "-c" ], type = "boolean" }
+    diff     = { options = [ "--diff", "-d" ], type = "boolean" }
+    in_place = { options = [ "--in-place", "-i" ], type = "boolean", default = true }
+    targets  = { default = ".", positional = true, type = "string" }
+
+# Clean-cache
+[tool.poe.tasks.clean]
+cwd   = "."
+help  = "Clean cache (--dry-run to preview)"
+shell = ".config/scripts/cache_clean.sh ${dry_run:+--dry-run} ${verbose:+--verbose} ${targets}"
+    [tool.poe.tasks.clean.args]
+    dry_run = { options = [ "--dry-run", "-d" ], type = "boolean" }
+    targets = { positional = true, type = "string" }
+    verbose = { options = [ "--verbose", "-v" ], type = "boolean" }
+
+# Build
+[tool.poe.tasks.build]
+cwd = "."
+help = "Build package" # poetry run pip install --force-reinstall dist/*.whl
+shell = """
+    poetry build
+    poetry install --without dev
+"""
+
+# Update
+[tool.poe.tasks.update]
+help = "Update dependencies"
+shell = """
+    poetry update
+    poetry install --no-root --sync
+    poetry lock
+"""
+
+# Pytest
+[tool.poe.tasks.test]
+cwd = "src"
+help = "Run pytest with coverage"
+interpreter = "bash"
+shell = """
+    # cd ${POE_PWD}
+
+    printf "\n\\033[90;47m"
+    printf "    Running 'pytest' with coverage    "
+    printf "\\033[0m\n"
+    echo ""
+
+    workspace=$(realpath ${WORKSPACE})
+    src="${workspace}/src"              # PWD is workspace/src (pytest rootdir)
+
+    # Resolve targets
+    targets_resolve=""
+    for target in ${targets}; do
+        target=$(realpath ${POE_PWD}/${target})
+        # resolve target relative to workspace/src
+        target=$(realpath --relative-to=${src} ${target})
+        # add target to pytest args
+        targets_resolve="${targets_resolve} ${target}"
+    done
+    # trim leading whitespace
+    targets_resolve=$(echo ${targets_resolve} | sed -e 's/^[[:space:]]*//')
+
+
+    # Defaults to Current Working Directory if no targets are specified
+    targets_resolve="${targets_resolve:-${POE_PWD}}"
+
+
+    config_pytest="${workspace}/${CONFIG_PYTEST}"
+    check_pytest=$(test -f ${config_pytest} && echo "OK")
+    status=$(test -f ${config_pytest} && printf "\\033[0;32m[OK]\\033[0m" || printf "\\033[0;31m[NOT FOUND]\\033[0m")
+
+    config_cov="${workspace}/${CONFIG_COVERAGE}"
+    check_cov=$(test -f ${config_cov} && echo "OK")
+    status=$(test -f ${config_cov} && printf "\\033[0;32m[OK]\\033[0m" || printf "\\033[0;31m[NOT FOUND]\\033[0m")
+
+    printf "\\033[38;5;245m"
+    echo "    workspace       : ${workspace}"
+    printf "\\033[38;5;245m"
+    echo "    config pytest   : ${config_pytest} ${status}"
+    printf "\\033[38;5;245m"
+    echo "    config coverage : ${config_cov} ${status}"
+    echo ""
+    printf "\\033[38;5;245m"
+    echo "    pytest root_dir (report files generated) :"
+    echo "        ${src}"
+    echo ""
+    printf "\\033[0;33m"
+    echo "    targets :"
+    for target in ${targets_resolve}; do
+        echo "        ${target}"
+    done
+    printf "\\033[0m"
+
+    # check_pytest or check_cov is empty
+    if [ -z "$check_pytest" ] || [ -z "$check_cov" ]; then
+        echo "\\033[0;31m"
+        echo "    Test config file not found"
+        echo "\\033[0m"
+        echo ""
+        exit 1
+    fi
+
+    if [[ -n "$exclude_dirs" ]]; then
+        exclude_dirs=$(echo ${FD_EXCLUDE} | tr ',' '\n' | sed 's/^/--ignore /' | tr '\n' ' ')
+    else
+        exclude_dirs=""
+    fi
+
+    printf "\\033[38;5;245m\n"
+    echo "    exclude_dirs :"
+    for exclude_dir in ${exclude_dirs}; do
+        echo "        ${exclude_dir}"
+    done
+    printf '\\033[0m'
+
+    echo ""
+
+    pytest -c ${config_pytest} \
+    --cov-config=${config_cov} \
+    ${verbose:+--verbose} \
+    ${exclude_dirs} \
+    ${capture:+--capture=${capture}} \
+    ${show_capture:+--show-capture=${show_capture}} \
+    ${collect_only:+--collect-only} \
+    ${no_cov:+--no-cov} \
+    ${cov_append:+--cov-append} \
+    ${targets_resolve}
+"""
+    [tool.poe.tasks.test.args]
+    capture      = { options = [ "--capture" ], type = "string" }
+    collect_only = { options = [ "--collect_only", "-co" ], type = "boolean" }
+    cov_append   = { options = [ "--cov_append", "-a" ], type = "boolean" }
+    no_cov       = { options = [ "--no_cov", "-n" ], type = "boolean" }
+    show_capture = { options = [ "--show", "-s" ], type = "string" }
+    targets      = { positional = true, type = "string", multiple = true }
+    verbose      = { options = [ "--verbose", "-v" ], type = "boolean" }

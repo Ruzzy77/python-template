@@ -1,0 +1,149 @@
+# Configuration for Formatters
+#
+# This file is used to configure the following tools:
+# See the respective tool's documentation for more information.
+#   - black (https://black.readthedocs.io/en/stable/)
+#   - isort (https://pycqa.github.io/isort/docs/configuration/options.html)
+#   - pydocstyle (https://www.pydocstyle.org/en/stable/usage.html#configuration)
+#
+# VSCode (settings.json):
+#   "[python]": {
+#       "editor.formatOnSave": true,
+#       "editor.formatOnPaste": true,
+#       "editor.formatOnType": true,
+#       "editor.defaultFormatter": "ms-python.black-formatter",
+#       "editor.codeActionsOnSave": {
+#           "source.organizeImports": true,
+#           "source.fixAll": true
+#       }
+#   },
+#   "black-formatter.args": [
+#       "--config", "${workspaceFolder}/<path/to/.config/black.toml>"
+#   ],
+#   "isort.args": [
+#       "--settings-path", "${workspaceFolder}/<path/to/.config/isort.toml>"
+#   ],
+
+
+# Sections:
+#   - black (https://black.readthedocs.io/en/stable/)
+#:     Code formatter
+#   - isort (https://pycqa.github.io/isort/docs/configuration/options.html)
+#:     Import sorter
+#   - pydocstyle (https://www.pydocstyle.org/en/stable/usage.html#configuration)
+#:     Docstring style checker
+
+
+################################################################################
+# black
+
+[tool.black]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+include = '\.pyi?$'
+include_trailing_comma = true
+line-length = 100
+target-version = [ 'py310', 'py311', 'py38', 'py39' ]
+
+################################################################################
+# isort
+
+[tool.isort]
+src_paths   = [ "src", "tests" ]
+virtual_env = ".venv"
+
+known_captum = [ "captum" ]
+known_first_party = [ "aindsys" ]
+known_lightly = [ "lightly" ]
+known_lightning = [ "lightning", "pytorch_lightning" ]
+known_numpy = [ "numpy", "numpy.typing" ]
+known_matplotlib = [ "matplotlib", "matplotlib.pyplot" ]
+known_pcblib = [ "pcblib" ]
+known_plotly = [
+    "dash",
+    "plotly",
+    "plotly.express",
+    "plotly.graph_objects",
+    "plotly.io",
+    "plotly.subplots",
+]
+known_sklearn = [ "sklearn" ]
+known_pytest = [ "conftest", "pytest", "pytest_mock" ]
+known_torch = [ "torch" ]
+known_torchvision = [ "torchvision" ]
+known_ray = [ "ray", "ray.data", "ray.rllib", "ray.serve", "ray.tune" ]
+known_typing = [ "collections", "typing", "typing_extensions" ]
+sections = """
+FUTURE,STDLIB,TYPING,THIRDPARTY,PYTEST,
+NUMPY,MATPLOTLIB,
+SKLEARN,
+TORCH,TORCHVISION,
+LIGHTNING,LIGHTLY,CAPTUM,RAY,PLOTLY,
+PCBLIB,FIRSTPARTY,LOCALFOLDER
+"""
+
+import_heading_firstparty  = "First Party"
+import_heading_localfolder = "Local"
+import_heading_thirdparty  = "Third Party"
+
+profile = "google"
+# Google style
+force_single_line          = "False"
+force_sort_within_sections = "False"  # True for Google style (Conflicts with length_sort_straight)
+group_by_package           = "True"
+lexicographical            = "True"
+order_by_type              = "False"
+single_line_exclusions     = "typing"
+
+# Custom style
+line_length          = 100
+lines_after_imports  = 2
+lines_before_imports = 1
+
+ignore_comments            = "True"
+treat_all_comments_as_code = "True"
+
+combine_as_imports   = "True"
+combine_star         = "True"
+length_sort_straight = "True"
+star_first           = "True"
+
+# balanced_wrapping = "True"
+
+# Black compatibility
+ensure_newline_before_comments = "True"
+force_grid_wrap                = 0
+include_trailing_comma         = "True"
+multi_line_output              = 3
+split_on_trailing_comma        = "True"
+use_parentheses                = "True"
+
+
+################################################################################
+# pydocstyle
+
+[tool.pydocstyle]
+# convention            = "google"
+ignore-self-only-init = true
+inherit               = true
+match                 = '(?!test_).*\.py'      # test_*.py
+match-dir             = '^(?!test|\.|_prv_).*' # test*, .*, _prv_*
+
+ignore = 'D105, D107, D213, D203'
+# Cannot pass both ignore and convention. They are mutually exclusive.
+# D105 : Missing docstring in magic method
+# D107 : Missing docstring in __init__
+# D213 : Multi-line docstring summary should start at the second line
+# D203 : 1 blank line required before class docstring (found 0)

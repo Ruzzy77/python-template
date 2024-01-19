@@ -1,0 +1,28 @@
+## :schema = "https://taplo.tamasfe.dev/schema_index.json"
+#:schema = "taplo://taplo.toml"
+
+[formatting]
+include = [ "**/*.toml" ]
+
+align_comments = true
+align_entries  = true
+column_width   = 80
+
+reorder_arrays = true
+reorder_keys   = true
+
+indent_entries = false
+indent_string  = "    "
+indent_tables  = true
+
+compact_arrays        = false
+compact_inline_tables = false
+inline_table_expand   = false
+
+allowed_blank_lines  = 3
+array_trailing_comma = true
+
+trailing_newline = true
+
+[schema]
+url = "https://json.schemastore.org/pyproject"

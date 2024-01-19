@@ -1,0 +1,193 @@
+#:schema = "https://json.schemastore.org/pyproject"
+
+# Poetry configuration
+[tool.poetry]
+authors     = [ "Ruzzy <hiyaq77@gmail.com>" ]
+description = "G-ICT: A framework for PCB defect detection using deep learning"
+license     = "MIT"
+name        = "g-ict"
+readme      = "README.md"
+version     = "0.1.0"
+
+packages = [
+    { include = "aindsys", from = "src" },
+    # { include = "pcblib", from = "src/pcb-defect-lib/src" },
+]
+
+exclude = [
+    # .gitignore automatically excluded
+    "**/docs",
+    "**/examples",
+    "**/notebooks",
+    "**/sample*",
+    "**/test*",
+    "pytest.toml",
+]
+
+    [tool.poetry.dependencies]
+    # Core packages
+    python = ">=3.10,<3.13"
+
+    [tool.poetry.group.custom.dependencies]
+    # Custom packages
+    pcb-defect-lib = { path = "src/pcb-defect-lib", develop = true }
+    # pcb-defect-lib = { version = "^0.1.2a0", allow-prereleases = true, source = "testpypi" }
+
+    [tool.poetry.group.dev.dependencies]
+    # Development packages
+    black           = { version = "^23.7.0", extras = [ "jupyter" ] }
+    isort           = "^5.12.0"
+    poethepoet      = "^0.22.0"
+    pre-commit      = "^3.3.3"
+    pydocstyle      = "^6.3.0"
+    pyenchant       = "^3.2.2"
+    pylint          = "^2.17.5"
+    pylint-pydantic = "^0.2.4"
+    pylint-pytest   = "^1.1.2"
+
+    docformatter = { version = "^1.7.5", extras = [ "tomli" ] }
+    nbconvert    = "^7.8.0"
+    notebook     = "^7.0.3"
+
+    [tool.poetry.group.test.dependencies]
+    # Testing packages
+    pytest     = "^7.4.0"
+    pytest-cov = "^4.1.0"
+
+    [tool.poetry.group.typing.dependencies]
+    # Typing packages
+    pydantic          = "1.*"    # Data validation  (Duplicate dependency with ray)
+    typing-extensions = "^4.7.0"
+
+    [tool.poetry.group.utils.dependencies]
+    # Utility packages
+    natsort  = "^8.4.0"  # Natural sorting
+    pathlib  = "^1.0.1"  # Path manipulation
+    tabulate = "^0.9.0"  # Pretty printing
+    tqdm     = "^4.65.0" # Progress bar
+
+    [tool.poetry.group.pytorch.dependencies]
+    # Deep learning packages
+    lightning       = "^2.0.6" # PyTorch Lightning
+    lightning-bolts = "^0.7.0" # PyTorch Lightning Bolts
+    # PyTorch
+    torch       = { version = "^2.0.1+cu118", source = "pytorch" }
+    torchvision = { version = "^0.15.2+cu118", source = "pytorch" }
+    # Lightly (Self-supervised learning)
+    lightly      = "^1.4.16"
+    torchinfo = "^1.8.0"
+
+    [tool.poetry.group.analysis.dependencies]
+    captum      = "^0.6.0"
+    grad-cam    = "^1.4.8"
+    racplusplus = "^0.1.1"
+
+    [tool.poetry.group.data_science.dependencies]
+    # Data science packages
+    numpy        = "^1.25.0"
+    pandas       = "^2.0.3"
+    scikit-image = "^0.21.0"
+    scikit-learn = "^1.3.0"
+    scipy        = "^1.11.1"
+    statsmodels  = "^0.14.0"
+
+    [tool.poetry.group.image_processing.dependencies]
+    # Image processing packages
+    Pillow        = "^9.5.0"    # PIL
+    opencv-python = "^4.8.0.74" # OpenCV
+
+    [tool.poetry.group.gui.dependencies]
+    # GUI packages
+    dash       = "^2.13.0"
+    matplotlib = "<3.7.0"  # Issue with Captum 0.6.0 (grid_b -> grid_visible)
+    plotly     = "^5.15.0" # Interactive plots
+    kaleido = "0.2.1"
+    seaborn = "^0.12.2"
+
+    [tool.poetry.group.app.dependencies]
+    # Web app packages
+    fastapi   = "^0.101.0"
+    streamlit = "^1.24.0"  # Web app
+
+    [tool.poetry.group.jupyter.dependencies]
+    # Jupyter packages
+    ipykernel  = "^6.23.3"
+    ipywidgets = "^8.0.7"
+
+    [tool.poetry.group.workflow.dependencies]
+    # Workflow packages
+    mlflow = "^2.5.0"
+
+    [tool.poetry.group.storage.dependencies]
+    # Storage packages
+    minio = "^7.1.15"
+
+    [tool.poetry.group.config.dependencies]
+    # Config packages
+    hydra-core = "^1.3.2"
+
+    [tool.poetry.group.ray.dependencies]
+    # Ray packages
+    pydantic = "1.*"                                          # Ray is not compatible with pydantic ^2.0.0 yet (Jul 2023)
+    ray      = { extras = [ "default" ], version = "^2.5.1" } # Parallelization
+
+
+
+    [tool.poetry.group.maple.dependencies]
+    racplusplus = "^0.1.1"
+
+[[tool.poetry.source]]
+name     = "testpypi"
+priority = "explicit"
+url      = "https://test.pypi.org/simple/"
+
+[[tool.poetry.source]]
+name     = "pytorch"
+priority = "explicit"
+url      = "https://download.pytorch.org/whl/cu118"
+
+[[tool.poetry.source]]
+name     = "PyPI"
+priority = "primary"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires      = [ "poetry-core" ]
+
+################################################################################
+# Poethepoet Configuration
+
+[tool.poe]
+env       = { WORKSPACE = "${VIRTUAL_ENV}/..", FD_EXCLUDE = "pcb-defect-lib" }
+verbosity = -1
+
+    [[tool.poe.include]]
+    path = ".config/poe.toml"
+
+
+    ################################################################################
+    # Docformatter Configuration
+    # (docformatter doesn't support custom config file names)
+
+[tool.docformatter]
+black             = true
+blank             = true
+recursive         = true
+style             = "google"
+wrap-descriptions = 80
+wrap-summaries    = 80       # 0: disable wrapping
+
+# make_summary_multiline = false
+# pre_summary_newline    = false
+# pre_summary_space      = false
+
+exclude = [
+    ".venv",
+    "build",
+    "dist",
+    "docs",
+    "examples",
+    "notebooks",
+    "sample*",
+    "test*",
+]

@@ -1,0 +1,933 @@
+{
+    "launch": {
+        "version": "0.1.0",
+        "configurations": [
+            {
+                "name": "Python: Current File",
+                "type": "python",
+                "request": "launch",
+                "program": "${file}",
+                "console": "integratedTerminal",
+                "env": {
+                    // "PYTHONPATH": "${workspaceFolder}/src/some-cool-lib"
+                }
+            },
+            {
+                "name": "Python: Module",
+                "type": "python",
+                "request": "launch",
+                "module": "module.name",
+                "console": "integratedTerminal",
+                "env": {
+                    // "PYTHONPATH": "${workspaceFolder}/src/some-cool-lib"
+                }
+            }
+        ],
+        "compounds": []
+    },
+    "folders": [
+        {
+            "path": ".."
+        },
+        // {
+        //     "path": "./src/some-cool-lib"
+        // }
+    ],
+    "settings": {
+        /* #region //## Font Family */
+
+        "terminal.integrated.fontFamily": "'CaskaydiaCove Nerd Font', 'MesloLGMDZ Nerd Font', Menlo, 'Cascadia Code', Pretendard, 'Pretendard Variable'",
+        "markdown.preview.fontFamily": "'Myriad Pro Light', Pretendard, 'Pretendard Variable'",
+
+        /* #endregion */
+
+        /* #region //## Editor */
+
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+        "editor.formatOnType": true,
+        "editor.formatOnPaste": false,
+        "editor.linkedEditing": true,
+        "editor.dragAndDrop": false,
+        "editor.emptySelectionClipboard": false,
+
+        "breadcrumbs.enabled": true,
+        "editor.minimap.enabled": false,
+
+        "editor.lineNumbers": "on",
+        "editor.renderWhitespace": "none",
+        "editor.renderLineHighlight": "none",
+        "editor.renderLineHighlightOnlyWhenFocus": true,
+
+        "editor.inlayHints.enabled": "offUnlessPressed",
+        "editor.inlayHints.padding": false,
+
+        "editor.suggest.insertMode": "replace",
+        "editor.suggest.localityBonus": true,
+        "editor.suggest.preview": true,
+        "editor.suggestSelection": "recentlyUsedByPrefix",
+
+        "editor.suggest.showIcons": true,
+        "editor.suggest.showKeywords": true,
+        "editor.suggest.showSnippets": true,
+        "editor.suggest.showWords": false,
+        "emmet.showSuggestionsAsSnippets": true,
+
+        "editor.inlineSuggest.showToolbar": "always",
+        "editor.inlineSuggest.enabled": true,
+        "editor.snippetSuggestions": "bottom",
+        "editor.acceptSuggestionOnEnter": "smart",
+
+        "editor.find.cursorMoveOnType": false,
+        "editor.find.autoFindInSelection": "multiline",
+        "editor.foldingHighlight": true,
+        "editor.occurrencesHighlight": "singleFile",
+
+        "editor.rulers": [80, 100, 120],
+        "editor.padding.top": 10,
+        "editor.padding.bottom": 10,
+        "editor.scrollbar.horizontalScrollbarSize": 15,
+        "editor.scrollbar.verticalScrollbarSize": 15,
+        "editor.cursorWidth": 3,
+        "editor.smoothScrolling": true,
+        "editor.cursorBlinking": "phase",
+        "editor.cursorSmoothCaretAnimation": "on",
+
+        "files.insertFinalNewline": true,
+        "files.trimTrailingWhitespace": true,
+        "files.associations": {
+            ".gitignore": "ignore"
+        },
+
+        "explorer.sortOrder": "type",
+        "explorer.sortOrderLexicographicOptions": "upper",
+        "workbench.editorLargeFileConfirmation": 100,
+
+        // "explorer.autoRevealExclude": {
+        //     "**/.venv": true
+        // },
+        // "explorer.autoReveal": "focusNoScroll",
+
+        /* #endregion */
+
+        /* #region //## Git */
+
+        "git.autoRepositoryDetection": true,
+        "git.detectSubmodules": true,
+
+        "git.enableSmartCommit": true,
+        "git.showPushSuccessNotification": true,
+
+        "git.terminalGitEditor": true,
+        "git.timeline.showUncommitted": true,
+        "git.openRepositoryInParentFolders": "prompt",
+        "git.confirmSync": false,
+        "git.enableStatusBarSync": false,
+
+        "[ignore]": {
+            "editor.defaultFormatter": "foxundermoon.shell-format"
+        },
+
+        "diffEditor.codeLens": true,
+        "scm.diffDecorations": "gutter",
+        "scm.diffDecorationsGutterPattern": {
+            "added": true,
+            "modified": true
+        },
+
+        "github.copilot.enable": {
+            "*": true,
+            "plaintext": true,
+            "markdown": true,
+            "scminput": false,
+            "yaml": true
+        },
+
+        /* #endregion */
+
+        /* #region //## Python */
+
+        // "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+        "pylint.importStrategy": "fromEnvironment",
+        "isort.importStrategy": "fromEnvironment",
+        "black-formatter.importStrategy": "fromEnvironment",
+        "python.envFile": "${workspaceFolder}/.env",
+
+        "pylint.args": ["--rcfile", "${workspaceFolder}/.config/pylint.toml"],
+        "isort.args": ["--settings-path", "${workspaceFolder}/.config/formatter.toml"],
+        "black-formatter.args": ["--config", "${workspaceFolder}/.config/formatter.toml"],
+
+        "python.testing.pytestArgs": [
+            ".",
+            "--config-file",
+            "pytest.toml",
+            "--collect-only",
+            "--no-cov"
+        ],
+        "python.testing.autoTestDiscoverOnSaveEnabled": false,
+
+        "pythonTestExplorer.testFramework": "pytest",
+        "pythonTestExplorer.testplanEnabled": false,
+        "python.testing.unittestEnabled": false,
+        "python.testing.pytestEnabled": false,
+
+        "testExplorer.codeLens": true,
+        "testExplorer.useNativeTesting": false,
+        "testExplorer.mergeSuites": true,
+        "testExplorer.addToEditorContextMenu": true,
+        "testExplorer.errorDecoration": false,
+        "testExplorer.errorDecorationHover": true,
+        "testExplorer.hideEmptyLog": false,
+        "testExplorer.hideWhen": "noTests",
+        "testExplorer.sort": "byLocationWithSuitesFirst",
+        "testExplorer.onReload": "reset",
+        // "testExplorer.onStart": "reset",
+        // "testExplorer.showOnRun": false,
+        // "testExplorer.showCollapseButton": false,
+        // "testExplorer.showExpandButton": 2,
+
+        "python.analysis.enablePytestSupport": true,
+        "python.testing.promptToConfigure": true,
+
+        "[python]": {
+            "editor.defaultFormatter": "ms-python.black-formatter",
+            "editor.codeActionsOnSave": {
+                "source.organizeImports": "explicit"
+            }
+        },
+        "isort.check": true,
+        "isort.severity": {
+            "W": "Warning",
+            "E": "Warning"
+        },
+        "pylint.severity": {
+            "convention": "Information",
+            "error": "Error",
+            "fatal": "Error",
+            "refactor": "Information",
+            "warning": "Warning",
+            "info": "Information"
+        },
+        "python.analysis.exclude": ["**/dist", "**/.venv", "**/__pycache__"],
+        "python.analysis.ignore": [
+            "**/site-packages/**/*.py", // default
+            "**/*.pyi",
+            "**/*.pyc"
+        ],
+
+        "python.analysis.inlayHints.functionReturnTypes": true,
+        "python.analysis.inlayHints.variableTypes": true,
+        "python.analysis.inlayHints.pytestParameters": true,
+
+        "python.analysis.importFormat": "absolute",
+        "python.analysis.fixAll": [
+            "source.convertImportFormat"
+            //"source.unusedImports"
+        ],
+
+        "python.analysis.autoFormatStrings": true,
+        "python.analysis.autoSearchPaths": true,
+        "python.analysis.autoImportCompletions": false,
+        "python.analysis.completeFunctionParens": false,
+
+        "python.analysis.typeCheckingMode": "basic",
+        "python.analysis.useLibraryCodeForTypes": true,
+        "python.analysis.stubPath": "",
+
+        "python.analysis.diagnosticMode": "workspace",
+        // "python.analysis.diagnosticSeverityOverrides": {
+        //     "reportPrivateImportUsage": "none"
+        // },
+
+        "python.globalModuleInstallation": false,
+        "python.terminal.executeInFileDir": true,
+        "python.terminal.activateEnvironment": true,
+        "python.terminal.activateEnvInCurrentTerminal": true,
+
+        "vsintellicode.features.python.deepLearning": "enabled",
+
+        /* #endregion */
+
+        /* #region //## Jupyter */
+
+        "jupyter.notebookFileRoot": "${workspaceFolder}",
+        "jupyter.interactiveWindow.creationMode": "perFile",
+
+        "jupyter.askForKernelRestart": false,
+        "jupyter.showVariableViewWhenDebugging": true,
+        // "jupyter.widgetScriptSources": ["jsdelivr.com", "unpkg.com"],
+        "jupyter.interactiveWindow.viewColumn": "beside",
+        "jupyter.interactiveWindow.textEditor.executeSelection": true,
+        "jupyter.interactiveWindow.textEditor.autoMoveToNextCell": false,
+        "jupyter.interactiveWindow.textEditor.magicCommandsAsComments": true,
+
+        "notebook.consolidatedRunButton": true,
+        "notebook.lineNumbers": "on",
+        "notebook.diff.ignoreMetadata": true,
+        "notebook.diff.ignoreOutputs": true,
+        "notebook.output.wordWrap": false,
+        "notebook.output.textLineLimit": 1000,
+        "notebook.output.lineHeight": 20,
+
+        /* #endregion */
+
+        /* #region //## Markdown */
+
+        "[markdown]": {
+            "editor.defaultFormatter": "esbenp.prettier-vscode",
+            "files.trimTrailingWhitespace": false,
+            "editor.wordWrap": "bounded",
+            "editor.wordWrapColumn": 200
+        },
+
+        // "markdown.styles": [".vscode/github-markdown-fontedit.css"],
+        "markdown.styles": [".vscode/github-markdown.css"],
+
+        "markdown.preview.scrollEditorWithPreview": false,
+        "markdown.preview.scrollPreviewWithEditor": false,
+        "markdown-preview-github-styles.colorTheme": "auto",
+
+        "markdown.extension.preview.autoShowPreviewToSide": true,
+        "markdown.extension.toc.slugifyMode": "github",
+        "markdown.extension.toc.updateOnSave": true,
+
+        //&* (Workspace Setting) Table of Contents
+        "markdown.extension.toc.levels": "1..3",
+        "markdown.extension.toc.omittedFromToc": {
+            "README.md": ["## Table of Contents"],
+            "readme_please.md": ["## Table of Contents"],
+            "읽어보기.md": ["# Table of Contents"]
+        },
+
+        /* #endregion */
+
+        /* #region //## Json */
+
+        "json.format.keepLines": true,
+        "json.validate.enable": true,
+
+        /* #endregion */
+
+        /* #region //## Toml */
+
+        "editor.detectIndentation": true,
+        "[yaml]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 2,
+            "editor.autoIndent": "advanced",
+            "diffEditor.ignoreTrimWhitespace": false
+        },
+
+        "[toml]": {
+            "editor.defaultFormatter": "tamasfe.even-better-toml"
+        },
+
+        "evenBetterToml.schema.catalogs": [
+            "https://www.schemastore.org/api/json/catalog.json",
+            "https://json.schemastore.org/pyproject",
+            "https://taplo.tamasfe.dev/schema_index.json"
+        ],
+
+        "evenBetterToml.schema.associations": {
+            "pyproject.toml": "https://json.schemastore.org/pyproject",
+            "taplo.toml": "taplo://taplo.toml"
+            // "poe.toml": ""
+        },
+        "evenBetterToml.schema.enabled": true,
+
+        "evenBetterToml.formatter.alignComments": true,
+        "evenBetterToml.formatter.alignEntries": true,
+        "evenBetterToml.formatter.columnWidth": 80,
+
+        "evenBetterToml.formatter.reorderArrays": true,
+        "evenBetterToml.formatter.reorderKeys": true,
+
+        "evenBetterToml.formatter.indentEntries": false,
+        "evenBetterToml.formatter.indentString": "    ",
+        "evenBetterToml.formatter.indentTables": true,
+
+        "evenBetterToml.formatter.compactArrays": false,
+        "evenBetterToml.formatter.compactInlineTables": false,
+        "evenBetterToml.formatter.inlineTableExpand": false,
+
+        "evenBetterToml.formatter.allowedBlankLines": 3,
+        "evenBetterToml.formatter.arrayTrailingComma": true,
+
+        "evenBetterToml.formatter.trailingNewline": true,
+
+        /* #endregion */
+
+        /* #region //## CSS */
+
+        "css.hover.references": false,
+        "css.lint.boxModel": "warning",
+        "css.lint.duplicateProperties": "warning",
+        "css.lint.compatibleVendorPrefixes": "warning",
+
+        /* #endregion */
+
+        /* #region //## Prettier */
+
+        "prettier.printWidth": 100,
+        "prettier.tabWidth": 4,
+        "prettier.useTabs": false,
+        "prettier.semi": true,
+        "prettier.singleQuote": false,
+        "prettier.proseWrap": "preserve",
+        "prettier.trailingComma": "es5",
+        "prettier.useEditorConfig": true,
+        "prettier.bracketSameLine": true,
+        "prettier.bracketSpacing": true,
+        "prettier.arrowParens": "always",
+        "prettier.endOfLine": "auto",
+
+        /* #endregion */
+
+        /* #region //## ShortcutMenuBar */
+
+        "ShortcutMenuBar.formatWith": true,
+        "ShortcutMenuBar.goToDefinition": true,
+        "ShortcutMenuBar.navigateBack": false,
+        "ShortcutMenuBar.navigateForward": false,
+        "ShortcutMenuBar.openSettings": true,
+        "ShortcutMenuBar.save": true,
+        "ShortcutMenuBar.showCommands": true,
+        "ShortcutMenuBar.undo": true,
+        "ShortcutMenuBar.redo": true,
+        "ShortcutMenuBar.commentLine": true,
+        "ShortcutMenuBar.compareWithSaved": true,
+        "ShortcutMenuBar.openFilesList": false,
+        "ShortcutMenuBar.toggleRenderWhitespace": true,
+        "ShortcutMenuBar.userButton01Command": "editor.action.fixAll",
+
+        /* #endregion */
+
+        /* #region //## Better Comments */
+
+        "better-comments.multilineComments": true,
+        "better-comments.highlightPlainText": true,
+        "better-comments.tags": [
+            {
+                "tag": "pylint:",
+                "color": "#5F5F5F",
+                "italic": true
+            },
+            {
+                "tag": "pyright:",
+                "color": "#5F5F5F",
+                "italic": true
+            },
+            {
+                "tag": "type: ignore",
+                "color": "#FFA500",
+                "italic": true
+            },
+            {
+                "tag": ":::",
+                "color": "#DBFF33"
+            },
+            {
+                "tag": "@fixme",
+                "color": "#FFEE58"
+            },
+            {
+                "tag": "!!!",
+                "color": "#FF2D00"
+            },
+            {
+                "tag": "???",
+                "color": "#3498DB"
+            },
+            {
+                "tag": "@debug",
+                "color": "#FF8C00",
+                "italic": true
+            },
+            {
+                "tag": "@test",
+                "color": "#CF275C",
+                "italic": true
+            },
+            {
+                "tag": "@note",
+                "color": "#FFEE58",
+                "italic": true
+            },
+            {
+                "tag": "@experimental",
+                "color": "#FFEE58",
+                "italic": true
+            },
+            {
+                "tag": "~~",
+                "color": "#474747",
+                "strikethrough": true
+            },
+            {
+                "tag": "@todo",
+                "color": "#8CDD99"
+            },
+            {
+                "tag": "@here",
+                "color": "#F2A3B5"
+            },
+            {
+                "tag": "@check",
+                "color": "#FFA500"
+            },
+            {
+                "tag": "##",
+                "color": "#b0b7bc",
+                "italic": true
+            },
+            {
+                "tag": "#region",
+                "color": "#b0b7bc",
+                "italic": true
+            },
+            {
+                "tag": "&*",
+                "color": "#98C379"
+            },
+            {
+                "tag": "@@@",
+                "color": "#29292B"
+            }
+        ],
+
+        /* #endregion */
+
+        /* #region //## Colorize */
+
+        "colorize.decoration_type": "underline",
+        "colorize.languages": [
+            "css",
+            "plaintext",
+            "markdown",
+            "yaml",
+            "yml",
+            "svg",
+            "json",
+            "jsonc",
+            "git-commit",
+            "git-rebase",
+            "python",
+            "toml",
+            "ini"
+        ],
+
+        /* #endregion */
+
+        /* #region //## ErrorLens */
+
+        "errorLens.fontWeight": "400",
+        "errorLens.messageMaxChars": 100,
+        "errorLens.statusBarIconsEnabled": true,
+        "errorLens.statusBarColorsEnabled": true,
+        "errorLens.statusBarIconsUseBackground": false,
+        "errorLens.statusBarMessageType": "closestProblem",
+        "errorLens.removeLinebreaks": false,
+        "errorLens.scrollbarHackEnabled": false,
+        "errorLens.statusBarIconsAtZero": "hide",
+        "errorLens.excludeBySource": ["Pylance(reportGeneralTypeIssues)"],
+
+        /* #endregion */
+
+        /* #region //## RegionFolder */
+
+        "maptz.regionfolder": {
+            // "[python]": {
+            //     "disableFolding": true
+            // },
+            "[markdown]": {
+                "foldStart": "[//]: <> (region [NAME])",
+                "foldEnd": "[//]: <> (endregion)",
+                "foldStartRegex": "\\[\\/\\/\\]:[\\s]*<>[\\s]*\\((region)[\\s]*(.*)\\)",
+                "foldEndRegex": "\\[\\/\\/\\]:[\\s]*<>[\\s]*\\((endregion)\\)"
+            },
+            "[toml]": {
+                // "disableFolding": false,
+                "foldStart": "# <!-- # region [NAME] -->",
+                "foldEnd": "# <!-- # endregion -->",
+                "foldStartRegex": "#[\\s]*<!--#[\\s]*(region)[\\s]*(.*)-->",
+                "foldEndRegex": "#[\\s]*<!--#[\\s]*(endregion)-->"
+            }
+        },
+
+        /* #endregion */
+
+        /* #region //## AutoDocstring */
+
+        "autoDocstring.docstringFormat": "google",
+        "autoDocstring.startOnNewLine": true,
+        "autoDocstring.includeExtendedSummary": true,
+        "autoDocstring.includeName": true,
+
+        /* #endregion */
+
+        /* #region //## SVG Viewer */
+
+        "[svg]": {
+            "editor.defaultFormatter": "jock.svg"
+        },
+
+        /* #endregion */
+
+        /* #region //## Resource monitor */
+
+        "resmon.updatefrequencyms": 2000,
+        "resmon.show.cpufreq": true,
+        "resmon.show.cputemp": true,
+        "resmon.show.cpuusage": true,
+        // "resmon.show.disk": true,
+        "resmon.show.battery": true,
+        "resmon.show.mem": true,
+
+        /* #endregion */
+
+        /* #region //## Remote SSH */
+
+        "remote.SSH.defaultForwardedPorts": [
+            {
+                "name": "Streamlit",
+                "srcPort": 8501,
+                "remotePort": 8501
+            },
+            {
+                "name": "Ray",
+                "srcPort": 8265,
+                "remotePort": 8265
+            },
+            {
+                "name": "Dash",
+                "srcPort": 8050,
+                "remotePort": 8050
+            }
+        ],
+
+        // "remote.extensionKind": {
+        //     "wakatime.vscode-wakatime": ["ui"]
+        // },
+
+        /* #endregion */
+
+        /* #region //## Code Spell Checker */
+
+        "cSpell.language": "en,lorem,en-US",
+        "cSpell.allowCompoundWords": true,
+        // "cSpell.checkLimit": 500,
+        "cSpell.minWordLength": 4,
+        "cSpell.numSuggestions": 3,
+        "cSpell.showAutocompleteSuggestions": true,
+        "cSpell.spellCheckOnlyWorkspaceFiles": true,
+        "cSpell.enableFiletypes": ["!json", "!jsonc", "plaintext", "yaml", "toml"],
+        "cSpell.usePnP": true,
+        "cSpell.diagnosticLevel": "Information",
+        "cSpell.words": [
+            "ablator",
+            "addinivalue",
+            "agnoster",
+            "agnotic",
+            "Ailab",
+            "aindsys",
+            "alloc",
+            "annot",
+            "arange",
+            "asarray",
+            "astype",
+            "axvline",
+            "azim",
+            "Binarizer",
+            "bmatrix",
+            "Bokeh",
+            "Boto",
+            "capsys",
+            "cbam",
+            "cbook",
+            "cdfs",
+            "CHATGPT",
+            "checkimg",
+            "CIFAR",
+            "cmap",
+            "coef",
+            "conda",
+            "Convolutional",
+            "corrcoef",
+            "cpus",
+            "cuda",
+            "cudatoolkit",
+            "cudnn",
+            "cumul",
+            "Dask",
+            "davinci",
+            "ddof",
+            "DEDUP",
+            "dendrogram",
+            "Discretisation",
+            "docparams",
+            "Dohyeon",
+            "dohyun",
+            "dropna",
+            "dsets",
+            "DSYS",
+            "dtype",
+            "elif",
+            "ENOENT",
+            "envfile",
+            "executiontime",
+            "fcluster",
+            "fftfreq",
+            "FIXT",
+            "floatfmt",
+            "freqs",
+            "fstring",
+            "getch",
+            "getsizeof",
+            "ggplot",
+            "gmtime",
+            "Grayscale",
+            "hbox",
+            "hier",
+            "hspace",
+            "hstack",
+            "htmlcov",
+            "icprint",
+            "iloc",
+            "imageio",
+            "imdecode",
+            "imread",
+            "imshow",
+            "imwrite",
+            "inds",
+            "inet",
+            "inplanes",
+            "Instanciate",
+            "intfmt",
+            "ipykernel",
+            "ipynb",
+            "ipython",
+            "ipywidget",
+            "ipywidgets",
+            "isin",
+            "isna",
+            "isort",
+            "keras",
+            "KIBANCUR",
+            "kmeans",
+            "kneighbors",
+            "levelno",
+            "LSCOLORS",
+            "lstsq",
+            "mathbb",
+            "mccabe",
+            "minio",
+            "mlflow",
+            "mlruns",
+            "MNIST",
+            "mpre",
+            "mpwd",
+            "mrec",
+            "mult",
+            "mypy",
+            "nbconvert",
+            "nbextension",
+            "ncols",
+            "ndarray",
+            "ndim",
+            "ngpoint",
+            "ngpointdata",
+            "nipy",
+            "NLBEHG",
+            "norecursedirs",
+            "numalign",
+            "numel",
+            "numpy",
+            "nvcc",
+            "openai",
+            "opencv",
+            "openml",
+            "optim",
+            "orgtbl",
+            "Parens",
+            "pcblib",
+            "perc",
+            "pinv",
+            "plotly",
+            "powerline",
+            "prec",
+            "Prentendard",
+            "printenv",
+            "psutil",
+            "pyarrow",
+            "pycache",
+            "pydantic",
+            "pydocstyle",
+            "pyenchant",
+            "pylance",
+            "Pylint",
+            "pynput",
+            "pyplot",
+            "pyproject",
+            "pyqt",
+            "pyright",
+            "pyrightconfig",
+            "pytest",
+            "quantile",
+            "quniform",
+            "racplusplus",
+            "racpp",
+            "randn",
+            "rcfile",
+            "rcnn",
+            "rcond",
+            "reinit",
+            "relu",
+            "repr",
+            "rgxs",
+            "RLlib",
+            "rprompt",
+            "RRGGBB",
+            "Ruzzy",
+            "Ryzen",
+            "scipy",
+            "Scrapy",
+            "Shap",
+            "simclr",
+            "sizex",
+            "sizey",
+            "skio",
+            "skipif",
+            "sklearn",
+            "stdevs",
+            "struct",
+            "sympy",
+            "sysinfo",
+            "tablefmt",
+            "taplo",
+            "tcgetattr",
+            "TCSADRAIN",
+            "tcsetattr",
+            "testpypi",
+            "thrd",
+            "tkagg",
+            "tndah",
+            "tnrange",
+            "tobytes",
+            "tomli",
+            "topk",
+            "tprint",
+            "tqdm",
+            "tsfresh",
+            "tslearn",
+            "TSNE",
+            "TUKOREA",
+            "ufaed",
+            "unhover",
+            "unnormalize",
+            "unobserve",
+            "UNPEEL",
+            "unsqueeze",
+            "vaild",
+            "vdfs",
+            "Vectorizing",
+            "Venv",
+            "viridis",
+            "virtualenvs",
+            "vmax",
+            "vmin",
+            "WEBUI",
+            "werkzeug",
+            "widgetsnbextension",
+            "worktree",
+            "wslg",
+            "wspace",
+            "xauth",
+            "xaxes",
+            "xaxis",
+            "xcalc",
+            "xclock",
+            "Xent",
+            "xeyes",
+            "xfail",
+            "xfailed",
+            "xlabel",
+            "xlaunch",
+            "xlim",
+            "xpassed",
+            "Xsrv",
+            "xticklabels",
+            "xticks",
+            "xunit",
+            "yaxes",
+            "yaxis",
+            "ylabel",
+            "ylim",
+            "yref",
+            "yticks",
+            "zaxis",
+            "zdir",
+            "zfunc",
+            "zlabel",
+            "zlim"
+        ],
+
+        /* #endregion */
+
+        ////////////////////////////////////////////
+        "placeholder": "Below Settings are not aligned with the above",
+        "[shellscript]": {
+            "editor.defaultFormatter": "foxundermoon.shell-format"
+        },
+        "[dotenv]": {
+            "editor.defaultFormatter": "foxundermoon.shell-format"
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-python.python",
+            "ms-python.vscode-pylance",
+            "ms-python.pylint",
+            "ms-python.black-formatter",
+            "ms-python.isort",
+            "ms-toolsai.jupyter",
+            "ms-toolsai.jupyter-renderers",
+            "streetsidesoftware.code-spell-checker",
+            "maptz.regionfolder",
+            "aaron-bond.better-comments",
+            "njpwerner.autodocstring",
+            "kamikillerto.vscode-colorize",
+            "esbenp.prettier-vscode",
+            "editorconfig.editorconfig",
+            "tamasfe.even-better-toml",
+            "yzhang.markdown-all-in-one",
+            "codezombiech.gitignore",
+            "littlefoxteam.vscode-python-test-adapter",
+            "hbenl.vscode-test-explorer",
+            "ryanluker.vscode-coverage-gutters",
+            "ms-ceintl.vscode-language-pack-ko",
+            "usernamehw.errorlens",
+            "ibm.output-colorizer",
+            "bierner.markdown-preview-github-styles",
+            "bierner.markdown-emoji",
+            "bierner.markdown-footnotes",
+            "bierner.markdown-checkbox",
+            // "eamodio.gitlens",
+            // "ms-vscode.live-server",
+            // "jerrygoyal.shortcut-menu-bar",
+            // "mutantdino.resourcemonitor",
+            // "natqe.reload",
+            "github.copilot",
+            "github.copilot-chat",
+            "visualstudioexptteam.vscodeintellicode",
+            // "ypresto.vscode-intelli-refactor",
+            // "grapecity.gc-excelviewer",
+            "tomoki1207.pdf",
+            "adpyke.codesnap",
+            "bierner.emojisense",
+            "jock.svg",
+            // "ruzzy.ruzzy-theme",
+            // "davidbwaters.macos-modern-theme",
+            // "emmanuelbeziat.vscode-great-icons"
+        ]
+    }
+}

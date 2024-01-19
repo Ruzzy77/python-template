@@ -1,0 +1,8 @@
+[repositories.testpypi]
+url = "https://test.pypi.org/legacy/"
+
+
+[virtualenvs]
+create     = true
+in-project = true
+path       = ".venv"

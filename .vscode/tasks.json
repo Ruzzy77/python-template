@@ -1,0 +1,61 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Activate venv",
+            "type": "shell",
+            "command": "source .venv/bin/activate",
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "detail": "Activate virtual environment (poetry)",
+            "args": []
+        },
+        {
+            "label": "Format (python)",
+            "type": "shell",
+            "dependsOn": ["Activate venv"],
+            "command": "poetry",
+            "group": "none",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "detail": "Format python code with black, isort, and docformatter",
+            "args": ["run", "poe", "-q", "format"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test (python) - aindsys package",
+            "type": "shell",
+            "dependsOn": ["Activate venv"],
+            "command": "poetry",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "detail": "Run pytest with coverage",
+            "args": ["run", "poe", "pytest", "aindsys"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Test (python) - some-cool-lib package",
+            "type": "shell",
+            "dependsOn": ["Activate venv"],
+            "command": "poetry",
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            },
+            "detail": "Run pytest with coverage",
+            "args": ["run", "poe", "pytest", "some-cool-lib"],
+            "problemMatcher": []
+        }
+    ]
+}

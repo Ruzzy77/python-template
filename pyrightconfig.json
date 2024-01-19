@@ -1,0 +1,62 @@
+{
+    //::: Pyright Configuration
+    "pythonVersion": "3.10",
+    "pythonPlatform": "Linux",
+
+    "venvPath": ".venv",
+
+    "include": ["src"],
+    "exclude": ["**/.*", "**/__pycache__", "**/.venv", "**/site-packages"],
+    "ignore": ["**/_prv_*", "**/*.pyi", "**/*.pyc", "**/<ipython-input-*>"],
+
+    "stubPath": "",
+    "typeshedPaths": [".venv/lib/python3.10/site-packages"],
+
+    "defineConstant": {
+        "DEBUG": "true",
+        "TEST": "true"
+    },
+
+    "executionEnvironments": [
+        {
+            "root": ".",
+            "python": ".venv/bin/python",
+            // "pythonOptions": ["-OO"],
+            "env": {
+                "PYTHONPATH": ".venv/lib/python3.10/site-packages"
+            }
+        }
+    ],
+
+    "typeCheckingMode": "strict",
+    "useLibraryCodeForTypes": true,
+    "verboseOutput": false,
+    // "strict": [ "src" ],
+
+    //::: Severity Levels Modification
+
+    "reportMissingImports": false,
+    "reportMissingParameterType": "none",
+    "reportMissingTypeStubs": "none",
+    "reportMissingTypeArgument": "information",
+
+    "reportPrivateImportUsage": "warning",
+    "reportTypeCommentUsage": "warning",
+
+    "reportUnusedVariable": "none",
+    "reportUnusedExpression": "none",
+    "reportUnusedFunction": "none",
+    "reportUnusedClass": "none",
+    "reportUnusedCallResult": "none",
+    "reportUnusedCoroutine": "none",
+
+    "reportUnknownArgumentType": "none",
+    "reportUnknownMemberType": "none",
+    "reportUnknownParameterType": "none",
+    "reportUnknownVariableType": "none",
+    "reportUnknownLambdaType": "none",
+    "reportUnusedImport": "none",
+
+    "reportUnnecessaryIsInstance": "information",
+    "reportUnnecessaryComparison": "information"
+}

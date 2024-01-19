@@ -1,0 +1,21 @@
+{
+    "files.exclude": { "src/pcb-defect-lib": true },
+
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+    "python.envFile": "${workspaceFolder}/.env",
+    "jupyter.notebookFileRoot": "${workspaceFolder}/src",
+    "python.testing.cwd": "${workspaceFolder}/src",
+    "python.testing.pytestArgs": [
+        ".", // python.testing.cwd
+        "--config-file",
+        "pytest.toml",
+        "--cov-config",
+        "${workspaceFolder}/.config/coverage.toml",
+        // "--ignore",
+        // "<ignored_folder>",
+        "--cov-append",
+        // "--no-cov"
+        "--collect-only"
+    ],
+    "cSpell.language": "en,lorem,en-US",
+}

@@ -1,0 +1,207 @@
+# Configuration for the pylint
+#
+# Usage:
+#   pylint --rcfile=<path/to/this/config/file> <path/to/file/to/check>
+#   pylint --rcfile=<path/to/this/config/file> <path/to/directory/to/check>
+#   pylint --rcfile=<path/to/this/config/file> <path/to/directory/to/check>/*.py
+#   pylint --rcfile=<path/to/this/config/file> <path/to/directory/to/check>/**/*.py
+#
+# VSCode (settings.json):
+#   "pylint.args": [
+#       "--rcfile", "<path/to/this/file>"
+#   ]
+
+# Sections:
+#   - [tool.pylint.main]
+#:      Main configuration, load plugins
+#   - [tool.pylint.master]
+#:      Allow list of modules
+#   - [tool.pylint.design]
+#:      Code design (complexity)
+#   - [tool.pylint.typecheck]
+#:      Type checking
+#   - [tool.pylint.basic]
+#:      Naming conventions
+#   - [tool.pylint.code_style]
+#:      Code style
+#   - [tool.pylint.spelling]
+#:      Spell checker
+#:      (Not working) - Alternates to use: code spell checker (VSCode extension)
+#   - [tool.pylint.similarities]
+#:     Detects duplicated code
+#   - [tool.pylint.formatting]
+#:      Code formatting, Code complexity, Code quality
+#   - [tool.pylint.messages_control]
+#:      Enable/Disable messages
+
+
+[tool.pylint.main]
+load-plugins = [
+    "pylint.extensions.bad_builtin",
+    "pylint.extensions.broad_try_clause",
+    "pylint.extensions.check_elif",
+    "pylint.extensions.code_style",
+    "pylint.extensions.consider_ternary_expression",
+    "pylint.extensions.docparams",
+    "pylint.extensions.docstyle",
+    "pylint.extensions.dunder",
+    "pylint.extensions.empty_comment",
+    "pylint.extensions.emptystring",
+    "pylint.extensions.mccabe",
+    "pylint.extensions.overlapping_exceptions",
+    "pylint.extensions.redefined_variable_type",
+    "pylint.extensions.typing",
+    "pylint_pydantic",
+    "pylint_pytest",
+]
+
+
+[tool.pylint.master]
+ignore = "lib"
+ignore-paths = [
+    ".venv",       # Virtual Environment
+    "^.*.pyi$",    # Type Hinting
+    "^.*_prv_.*$", # Private Files/Folders (e.g. _prv_*.py | _prv_* folder)
+    "lib",         # External Libraries
+]
+init-hook = "import sys; sys.path.append('.'); sys.path.append('./src');"
+
+[tool.pylint.design]
+max-complexity = 14
+
+[tool.pylint.typecheck]
+# generated-members = ""
+generated-members = "numpy.*, torch.*, ray.*, tqdm.*, cv2.*"
+# ignored-classes   = [ "cv2", "logging.RootLogger" ]
+
+
+[tool.pylint.basic]
+bad-names       = [ "bar", "baz", "foo", "tata", "toto", "tutu" ]
+good-names      = [ "Run", "_", "df", "ex", "i", "idx", "j", "k", "run" ]
+good-names-rgxs = '^[_a-z][_a-z0-9]?$'
+
+argument-naming-style        = "snake_case"
+attr-naming-style            = "snake_case"
+class-attribute-naming-style = "any"
+class-naming-style           = "any"        # "PascalCase"
+const-naming-style           = "UPPER_CASE"
+function-naming-style        = "snake_case"
+inlinevar-naming-style       = "snake_case"
+method-naming-style          = "snake_case"
+module-naming-style          = "snake_case"
+variable-naming-style        = "snake_case"
+
+# Pascal case with underscore
+# e.g. "My_Class" or "MyClass"
+# class-rgx = "^([A-Z][a-z0-9]+_?)+$"
+
+
+[tool.pylint.code_style]
+max-line-length = 100
+
+
+[tool.pylint.spelling]
+max-spelling-suggestions = 5
+# spelling-dict                = "en_US"
+spelling-private-dict-file   = ".dictionary"
+spelling-store-unknown-words = true
+
+
+[tool.pylint.similarities]
+ignore-comments      = true
+ignore-docstrings    = true
+ignore-imports       = false
+min-similarity-lines = 5
+
+
+[tool.pylint.formatting]
+# max-line-length = 100
+# max-module-lines = 1000
+# max-parents = 7
+# max-args = 10
+# max-attributes = 7
+# max-locals = 25
+# max-statements = 100
+# max-returns = 6
+# max-branches = 12
+# max-bool-expr = 5
+max-nested-blocks = 5
+# max-try-body-size = 2
+# max-expressions = 100
+# max-module-members = 100
+
+
+[tool.pylint.messages_control]
+enable = [
+    # pylint.extensions.docstyle
+    "missing-class-docstring",
+    "missing-docstring",
+    "missing-function-docstring",
+    "missing-module-docstring",
+
+    # pylint.extensions.typing
+    "deprecated-typing-alias",
+]
+
+disable = [
+    # "import-error",
+    # "reimported",
+
+    # "duplicate-code",
+    # "trailing-newlines",
+
+    ########### Seen messages ###########
+    # "line-too-long",
+    "bad-docstring-quotes",
+    "line-too-long",
+    "too-many-locals",
+    "unused-import",
+    "astroid-error",
+    "unused-variable",
+    # "deprecated-typing-alias",
+    # "too-complex",
+    "wrong-import-order",
+
+    "consider-using-assignment-expr",
+    # "consider-alternative-union-syntax", # PEP 604
+    # "wrong-import-position",
+    # "too-many-boolean-expressions",
+
+    ########## Unseen messages ##########
+    "too-few-public-methods",
+    "too-many-arguments",
+    # "too-many-instance-attributes",
+    # "too-many-branches",
+    "too-many-ancestors",
+    "too-many-lines",
+    "too-many-public-methods",
+    "too-many-return-statements",
+    "too-many-statements",
+    "too-many-try-statements",
+
+    "attribute-defined-outside-init",
+    "expression-not-assigned",
+    "global-statement",
+    "redefined-argument-from-local",
+    "redefined-outer-name",
+    "unnecessary-lambda-assignment",
+
+    "no-else-raise",
+    "no-else-return",
+    "no-member",
+    "no-name-in-module",
+
+    "abstract-method",
+    "arguments-differ",
+    "blacklisted-name",
+    "c-extension-no-member",
+    "chained-comparison",
+    "consider-using-sys-exit",
+    "eval-used",
+    "exec-used",
+    "fixme",
+    "logging-fstring-interpolation",
+    "raise-missing-from",
+    "stop-iteration-return",
+    "unexpected-special-method-signature",
+]
